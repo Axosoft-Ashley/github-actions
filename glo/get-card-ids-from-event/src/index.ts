@@ -1,11 +1,10 @@
 import * as fs from 'fs';
-import * as R from 'ramda';
 import * as core from '@actions/core';
 import config from '../config/config.json'
 
 interface IBoard {
   id: string;
-  cardIds: [];
+  cardIds: string[];
 }
 function formatResponse(response: IBoard[]) {
   return core.setOutput("cardIds", JSON.stringify(response));;
@@ -24,7 +23,8 @@ async function run() {
 
   const urlREGEX = RegExp(`${config.gloBaseUrl}/board/([\\w.-]+)/card/([\\w.-]+)`, 'g');
 
-  let boardByIdMap: { [boardId: string]: { cards: string[] } } = {};
+  let boardIdIndexMap: { [boardId: string]: number } = {};
+  let boards: IBoard[] = [];
   let foundResult;
   while ((foundResult = urlREGEX.exec(bodyToSearchForGloLink)) !== null) {
     // 0 https://app.gitkraken.com/glo/board/WypkcIjPCxAArrhR/card/XKTgt5arBgAPsVjF
@@ -34,11 +34,20 @@ async function run() {
       // link is not valid??
       return;
     }
-    boardByIdMap[boardId] = boardByIdMap[boardId] || { cards: [] };
-    boardByIdMap[boardId].cards.push(cardId);
+
+    boardIdIndexMap[boardId] = boardIdIndexMap[boardId] || boards.length;
+
+    const board = boards[boardIdIndexMap[boardId]];
+    if (board) {
+      board.cardIds.push(cardId);
+    } else {
+      boards[boardIdIndexMap[boardId]] = {
+        id: boardId,
+        cardIds: [cardId]
+      }
+    }
   }
-
-
+  return formatResponse(boards);
 }
 
 run();
