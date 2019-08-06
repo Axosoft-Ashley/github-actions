@@ -1,0 +1,22 @@
+# move cards
+name: 'Glo Add Label To Card'
+description: 'GitHub Action to add a label to a card'
+branding:
+  color: 'blue'
+  icon: 'tag'
+inputs:
+  authToken:
+    description: Auth token for user
+    required: true
+  boardID:
+    description: ID of board
+    required: true
+  cardID:
+    description: ID of card
+    required: true
+  label:
+    description: Name of label to add to card
+    required: true
+runs:
+  using: 'node12'
+  main: 'lib/index.js'

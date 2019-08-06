@@ -1,0 +1,30 @@
+{
+  "name": "@axosoft/github-actions-glo-add-label-to-card",
+  "version": "1.0.0",
+  "description": "",
+  "main": "lib/index.js",
+  "scripts": {
+    "build": "tsc",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Axosoft/github-actions.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Axosoft/github-actions/issues"
+  },
+  "homepage": "https://github.com/Axosoft/github-actions#readme",
+  "devDependencies": {
+    "@types/node": "^12.6.8",
+    "typescript": "^3.5.3"
+  },
+  "dependencies": {
+    "@actions/core": "file:../../toolkit/actions-core-0.0.0.tgz",
+    "@actions/exec": "file:../../toolkit/actions-exec-0.0.0.tgz",
+    "@axosoft/glo-sdk": "^1.0.7",
+    "fs": "^0.0.1-security"
+  }
+}
